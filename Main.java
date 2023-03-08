@@ -23,6 +23,13 @@ for(int i=0;i<personas.length;i++) {
 	boolean esAtractiva = random.nextBoolean();
 	boolean tienePareja = random.nextBoolean();
 	
+	if(esAlto==usaGorra && usaGorra==esAtractiva && esAtractiva==tienePareja) {
+		esAlto = random.nextBoolean();
+		usaGorra = random.nextBoolean();
+		esAtractiva = random.nextBoolean();
+		tienePareja = random.nextBoolean();
+	}
+	
 	if(esAlto==true) {
 		contAlto++;
 	}
@@ -47,6 +54,8 @@ for(Persona1 per : personas) {
 	int sujeto = (int)(Math.random()*10);
 	System.out.println("\nEmpecemos el juego de Adivina Quien");
 	
+	for(int i=0;i<3;i++) {
+		System.out.println("Pregunta "+(i+1));
 	System.out.println("\nEstas son las preguntas");
     System.out.println("1 es Alto?");
     System.out.println("2 es Atractiva?");
@@ -128,27 +137,30 @@ for(Persona1 per : personas) {
          }
        }
      }
-   
+	
    if(personas[sujeto] == null){
      --personasEliminadas;
    }
     
-   System.out.println("Personajes que quedan: ");
    for (int j = 0; j < personas.length; j++) {
-     if (personas[j] != null) {
-       if(personasEliminadas < 9){
-         System.out.println(j + personas[j].getNombre());
-       } else {
-         System.out.println("Una persona queda");
-         break;
-       }
-   }
- }
+	     if (personas[j] != null) {
+	       if(personasEliminadas < 9){
+	         System.out.println(j + personas[j].getNombre());
+	       } else {
+	         System.out.println("Una persona queda");
+	         System.out.println(j + personas[j].getNombre());
+	         break;
+	       }
+	   }
+	 }
+   
+	}
    int res2 = sc.nextInt();
    if(res2==sujeto) {
-	   System.out.println("Felicitaciones adivbinaste");
+	   System.out.println("Felicitaciones adivinaste");
    }else {
 	   System.out.println("Lo sentimos no has adivinado");
+	   System.out.println(personas[sujeto].getNombre());
    }
    sc.close();
    }
