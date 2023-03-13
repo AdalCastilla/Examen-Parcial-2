@@ -1,14 +1,32 @@
 package Examen2;
 import java.util.Random;
 import java.util.Scanner;
-
+import java.io.*;
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Bienvenido al juego de adivina quien");
+	System.out.println("Para empezar ingresa tu nombre");
+	String nombrejugador = sc.next();
+	int totalW=0, totalG=0;	
+	
+	File file = new File("C:\\Users\\adalc\\Downloads\\eclipse\\Parcial1\\src\\JugadoresAdivinaquien",nombrejugador+".text");
+	
+	if (file.exists()) {
+		BufferedReader BR = new BufferedReader(new FileReader(file));
+		totalG=Integer.parseInt(BR.readLine());
+		totalW=Integer.parseInt(BR.readLine());
+		BR.close();
+		System.out.println("Hey" + nombrejugador + "Listo para volver a jugar?");
+		System.out.println("Felicidades, has ganado"+ totalW+ "juegos y has jugado"+ totalG+ "juegos");
+	}else {
+		file.createNewFile();
+		System.out.println("Hola"+ nombrejugador+ "Bienvenido al juego de adivina quien");
+	}
 		
 Persona1[] personas = new Persona1[10];
 Random random = new Random();
-Scanner sc = new Scanner(System.in);
 String[] nombres= {"Jesus","Roberto","Ignacio","Tilin","Adal","Pou","Gekko","WinniePoh","Sullivan","Boo"};
 int contAlto=0;
 int contGorra=0;
@@ -45,7 +63,7 @@ for(int i=0;i<personas.length;i++) {
 	personas[i]= new Persona1(nombre,esAlto,usaGorra,esAtractiva,tienePareja);
 }
 
-
+totalG++;
 for(Persona1 per : personas) {
 	System.out.println(per.getNombre()+" "+"Es Alto:"+ per.esAlto() +" , "+"Es Atractiva: "+ per.esAtractiva() +" , "+"Usa Gorra: "+ per.usaGorra() +" , "+"Tiene pareja: "+ per.tienePareja());
 }
@@ -158,11 +176,23 @@ for(Persona1 per : personas) {
    int res2 = sc.nextInt();
    if(res2==sujeto) {
 	   System.out.println("Felicitaciones adivinaste");
+	   totalW++;
    }else {
 	   System.out.println("Lo sentimos no has adivinado");
 	   System.out.println(personas[sujeto].getNombre());
    }
+   
+   FileWriter FW = new FileWriter(file);
+   FW.write("partidas jugadas\n");
+   FW.write(totalG);
+   FW.write("partidas Ganadas\n");
+   FW.write(totalW);
+   FW.close();
+   System.out.println("Tus datos han sido guardadas");
+   
    sc.close();
+   
+   
    }
    
 }
